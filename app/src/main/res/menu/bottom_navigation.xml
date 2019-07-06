@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_event"
+        android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+        android:title="Event"
+        />
+
+    <item
+        android:id="@+id/nav_today"
+        android:icon="@drawable/ic_event_note_black_24dp"
+        android:title="Today"
+        />
+
+    <item
+        android:id="@+id/nav_attendance"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="User"
+        />
+</menu>

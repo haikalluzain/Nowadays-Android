@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.Splash"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/blue_700"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/img_splash"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/w_white"
+            android:tint="@color/white"/>
+
+        <TextView
+            android:id="@+id/txt_splash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Wikrama Nowadays"
+            android:textColor="@color/white"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            app:fontFamily="@font/product_sans_bold"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
