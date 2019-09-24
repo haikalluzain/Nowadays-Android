@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".activity.AddEvent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="start"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="center"
+                android:tint="@color/grey_800"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Event"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:fontFamily="@font/font_product_sans"
+                android:textSize="20dp"
+                android:textColor="@color/grey_800"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="Simpan"
+                    android:textAllCaps="false"
+                    android:layout_gravity="right"
+                    android:fontFamily="@font/font_product_sans"
+                    android:background="@drawable/button_custom_solid"
+                    android:backgroundTint="@color/blue_600"
+                    android:textSize="17dp"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Judul"
+                android:textSize="19dp"
+                android:textColor="@color/grey_700"
+                android:fontFamily="@font/font_product_sans"/>
+
+            <EditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="19dp"
+                android:inputType="textMultiLine"
+                android:textColor="@color/grey_800"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/font_product_sans"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_100"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <EditText
+                android:id="@+id/desc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine|textLongMessage"
+                android:minHeight="100dp"
+                android:gravity="start"
+                android:textSize="19dp"
+                android:hint="Deskripsi"
+                android:textColor="@color/grey_800"
+                android:fontFamily="@font/font_product_sans"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_100"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp">
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="Mulai"
+                android:textSize="19dp"
+                android:textColor="@color/grey_700"
+                android:fontFamily="@font/font_product_sans"/>
+
+            <Button
+                android:id="@+id/start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="19dp"
+                android:gravity="start|center"
+                android:hint="Selasa, 17 September 2019"
+                android:textColorHint="@color/grey_700"
+                android:textColor="@color/grey_800"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/font_product_sans"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp">
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="Selesai"
+                android:textSize="19dp"
+                android:textColor="@color/grey_700"
+                android:fontFamily="@font/font_product_sans"/>
+
+            <Button
+                android:id="@+id/end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="19dp"
+                android:gravity="start|center"
+                android:hint="Selasa, 17 September 2019"
+                android:textColorHint="@color/grey_700"
+                android:textColor="@color/grey_800"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/font_product_sans"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_100"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Warna"
+                android:textSize="19dp"
+                android:textColor="@color/grey_700"
+                android:fontFamily="@font/font_product_sans"/>
+
+            <ImageButton
+                android:id="@+id/primary"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="2dp"
+                android:scaleType="fitCenter"
+                android:background="@drawable/button_round"
+                android:src="@drawable/ic_check_black_24dp"
+                android:tint="@color/white"
+                android:backgroundTint="@color/blue_600"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/info"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="2dp"
+                android:scaleType="fitCenter"
+                android:background="@drawable/button_round"
+                android:tint="@color/white"
+                android:backgroundTint="@color/blue_200"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/success"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="2dp"
+                android:scaleType="fitCenter"
+                android:background="@drawable/button_round"
+                android:tint="@color/white"
+                android:backgroundTint="@color/green_600"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/warning"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="2dp"
+                android:scaleType="fitCenter"
+                android:background="@drawable/button_round"
+                android:tint="@color/white"
+                android:backgroundTint="@color/orange_600"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/danger"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="2dp"
+                android:scaleType="fitCenter"
+                android:background="@drawable/button_round"
+                android:tint="@color/white"
+                android:backgroundTint="@color/red_600"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center">
+            </ImageButton>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

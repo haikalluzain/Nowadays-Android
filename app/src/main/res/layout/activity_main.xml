@@ -22,12 +22,14 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation"
+        android:paddingHorizontal="20dp"
         app:labelVisibilityMode="unlabeled"
-        android:background="@drawable/shape_rounded"
-        app:elevation="5dp">
+        android:background="@drawable/shape_top_rounded"
+        app:elevation="15dp"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+        android:elevation="15dp">
 
     </android.support.design.widget.BottomNavigationView>
 

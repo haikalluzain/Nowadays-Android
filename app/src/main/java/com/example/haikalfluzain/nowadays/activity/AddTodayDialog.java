@@ -7,17 +7,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TextInputEditText;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.view.MotionEvent;
+import android.text.InputType;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.haikalfluzain.nowadays.R;
 import com.example.haikalfluzain.nowadays.base.BaseActivity;
-import com.example.haikalfluzain.nowadays.fragment.TimePickerFragment;
 import com.example.haikalfluzain.nowadays.helper.SharedPrefManager;
 import com.example.haikalfluzain.nowadays.model.Today;
 import com.example.haikalfluzain.nowadays.presenter.TodayPresenter;
@@ -25,24 +22,25 @@ import com.example.haikalfluzain.nowadays.view.TodayView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class AddTodayDialog extends BaseActivity implements TodayView, TimePickerDialog.OnTimeSetListener {
+import static android.content.DialogInterface.*;
+
+public class AddTodayDialog extends BaseActivity implements TodayView{
     TodayPresenter todayPresenter;
     SharedPrefManager sharedPrefManager;
     TextInputEditText act,start,end;
-    Button submit;
-    boolean startClick = false;
+    Button submit,cancel;
+    public boolean startClick = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
+        this.setFinishOnTouchOutside(false);
 
         setContentView(R.layout.activity_add_today_dialog);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -56,16 +54,38 @@ public class AddTodayDialog extends BaseActivity implements TodayView, TimePicke
         start = findViewById(R.id.start);
         end = findViewById(R.id.end);
         submit = findViewById(R.id.submit);
+        cancel = findViewById(R.id.cancel);
 
-
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         start.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus){
                     startClick = true;
-                    DialogFragment timePicker = new TimePickerFragment();
-                    timePicker.show(getSupportFragmentManager(), "time picker");
+                    start.setInputType(InputType.TYPE_NULL); // disable keyboard
+                    Calendar c = Calendar.getInstance();
+                    int hour = c.get(Calendar.HOUR_OF_DAY);
+                    int minute = c.get(Calendar.MINUTE);
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(AddTodayDialog.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            start.setText(String.format("%02d:%02d",hourOfDay,minute));
+                            start.clearFocus();
+                        }
+                    }, hour, minute, true);
+                    timePickerDialog.show();
+                    timePickerDialog.setOnDismissListener(new OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            start.clearFocus();
+                        }
+                    });
                 }
             }
         });
@@ -75,8 +95,24 @@ public class AddTodayDialog extends BaseActivity implements TodayView, TimePicke
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus){
                     startClick = false;
-                    DialogFragment timePicker = new TimePickerFragment();
-                    timePicker.show(getSupportFragmentManager(), "time picker");
+                    end.setInputType(InputType.TYPE_NULL); // disable keyboard
+                    Calendar c = Calendar.getInstance();
+                    int hour = c.get(Calendar.HOUR_OF_DAY);
+                    int minute = c.get(Calendar.MINUTE);
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(AddTodayDialog.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            end.setText(String.format("%02d:%02d", hourOfDay, minute));
+                            end.clearFocus();
+                        }
+                    }, hour, minute, true);
+                    timePickerDialog.show();
+                    timePickerDialog.setOnDismissListener(new OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            end.clearFocus();
+                        }
+                    });
                 }
             }
         });
@@ -114,6 +150,7 @@ public class AddTodayDialog extends BaseActivity implements TodayView, TimePicke
                 }else if(tstart.after(tend)){
                     Toast.makeText(AddTodayDialog.this, "Time start can't be set after time end!", Toast.LENGTH_SHORT).show();
                     start.setError("");
+                    start.requestFocus();
                     start.clearComposingText();
                 }else{
                     todayPresenter.store(nact,nstart,nend,sharedPrefManager.getSpToken());
@@ -134,11 +171,23 @@ public class AddTodayDialog extends BaseActivity implements TodayView, TimePicke
         if (code.equals("200"))
         {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(AddTodayDialog.this, Main.class));
+            Intent intent = new Intent();
+            intent.putExtra("refresh", "true");
+            setResult(RESULT_OK, intent);
             finish();
         }else{
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onSuccessUpdate(String code, String message) {
+
+    }
+
+    @Override
+    public void onSuccessDelete(String code, String message) {
+
     }
 
     @Override
@@ -164,26 +213,6 @@ public class AddTodayDialog extends BaseActivity implements TodayView, TimePicke
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (MotionEvent.ACTION_OUTSIDE == event.getAction()){
-            return true;
-        }
-
-        return super.onTouchEvent(event);
-    }
-
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        if (startClick){
-            start.setText(String.format("%02d:%02d",hourOfDay,minute));
-            start.clearFocus();
-        }else {
-            end.setText(String.format("%02d:%02d",hourOfDay,minute));
-            end.clearFocus();
-        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.haikalfluzain.nowadays.model;
 
 public class Today {
     String id,start,end,activity;
+    boolean checked;
 
     public Today(String id, String start, String end, String activity){
         this.id = id;
@@ -40,5 +41,13 @@ public class Today {
 
     public void setActivity(String activity) {
         this.activity = activity;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

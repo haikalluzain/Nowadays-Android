@@ -1,7 +1,14 @@
 package com.example.haikalfluzain.nowadays.base;
 
+import com.google.gson.annotations.SerializedName;
+
 public class BaseResponse {
-    String code, message;
+
+    @SerializedName("code")
+    String code;
+
+    @SerializedName("message")
+    String message;
 
     public String getCode() {
         return code;

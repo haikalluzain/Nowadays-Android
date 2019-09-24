@@ -22,19 +22,25 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        if (getIntent().getBooleanExtra("EXIT", false))
+        {
+            finish();
+        }else{
+            img = findViewById(R.id.img_splash);
+            text = findViewById(R.id.txt_splash);
+            Animation animation = AnimationUtils.loadAnimation(this, R.anim.splash_anim);
+            animation.setDuration(500);
+            img.startAnimation(animation);
+            text.startAnimation(animation);
 
-        img = findViewById(R.id.img_splash);
-        text = findViewById(R.id.txt_splash);
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.splash_anim);
-        animation.setDuration(500);
-        img.startAnimation(animation);
-        text.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(Splash.this,Main.class));
+                }
+            },1000);
+        }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(Splash.this,Main.class));
-            }
-        },1000);
+
     }
 }

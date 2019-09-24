@@ -76,8 +76,9 @@
                                 android:id="@+id/user"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
                                 android:src="@drawable/ic_account_circle_black_24dp"
-                                android:backgroundTint="@android:color/transparent"
+                                android:background="?attr/selectableItemBackgroundBorderless"
                                 android:tint="@color/white" />
                         </LinearLayout>
                     </LinearLayout>
@@ -93,7 +94,8 @@
                             android:layout_marginRight="15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/main_shape">
+                            android:background="@drawable/main_shape"
+                            android:clipChildren="true">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -117,39 +119,40 @@
                                             android:id="@+id/countData"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="5 Jadwal"
+                                            android:text="Loading..."
                                             android:fontFamily="@font/product_sans_regular"
+                                            android:textColor="@color/grey_700"
                                             android:layout_weight="1"
                                             android:textSize="15dp"/>
+
+                                        <ImageButton
+                                            android:id="@+id/deleteToday"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="15dp"
+                                            android:tint="@color/grey_700"
+                                            android:background="?attr/selectableItemBackgroundBorderless"
+                                            android:src="@drawable/ic_trash_2"/>
 
                                         <ImageButton
                                             android:id="@+id/addToday"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:tint="@color/colorPrimary"
-                                            android:backgroundTint="@android:color/transparent"
-                                            android:src="@drawable/ic_add_black_24dp">
-                                        </ImageButton>
+                                            android:layout_margin="15dp"
+                                            android:background="?attr/selectableItemBackgroundBorderless"
+                                            android:src="@drawable/ic_plus"/>
                                     </LinearLayout>
 
-                                    <ImageButton
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="right"
-                                        android:src="@drawable/ic_account_circle_black_24dp"
-                                        android:backgroundTint="@android:color/transparent"/>
 
                                 </LinearLayout>
 
                                 <android.support.v7.widget.RecyclerView
                                     android:background="@android:color/transparent"
-                                    android:layout_marginHorizontal="20dp"
                                     android:layout_marginBottom="20dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:id="@+id/recyclerTest">
-
-                                </android.support.v7.widget.RecyclerView>
+                                    android:id="@+id/recyclerTest"/>
 
                                 <LinearLayout
                                     android:id="@+id/noData"
@@ -171,7 +174,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="Belum ada jadwal yang tersedia"
                                         android:fontFamily="@font/product_sans_bold"
-                                        android:gravity="center"/>
+                                        android:gravity="center" />
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>

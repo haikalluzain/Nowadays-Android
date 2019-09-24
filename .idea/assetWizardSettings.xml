@@ -115,7 +115,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_add_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_close_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -126,11 +126,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="796" />
-                            <entry key="outputName" value="ic_undraw_to_do_list_a49b" />
-                            <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Haikal F Luzain\Pictures\undraw\undraw_to_do_list_a49b.svg" />
-                            <entry key="width" value="1155" />
+                            <entry key="outputName" value="ic_angle_arrow_pointing_down" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/angle-arrow-pointing-down.svg" />
                           </map>
                         </option>
                       </PersistentState>

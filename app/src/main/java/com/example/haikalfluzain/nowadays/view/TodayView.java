@@ -8,4 +8,6 @@ import java.util.List;
 public interface TodayView extends BaseView {
     void onSuccessLoadTodays(List<Today> todays);
     void onSuccessStore(String code, String message);
+    void onSuccessUpdate(String code, String message);
+    void onSuccessDelete(String code, String message);
 }
