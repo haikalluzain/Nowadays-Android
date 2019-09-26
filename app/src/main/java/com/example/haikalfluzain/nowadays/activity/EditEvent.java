@@ -1,7 +1,6 @@
 package com.example.haikalfluzain.nowadays.activity;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.haikalfluzain.nowadays.R;
-import com.example.haikalfluzain.nowadays.adapter.EventAdapter;
 import com.example.haikalfluzain.nowadays.helper.SharedPrefManager;
 import com.example.haikalfluzain.nowadays.model.Event;
 import com.example.haikalfluzain.nowadays.presenter.EventPresenter;
@@ -32,9 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-public class AddEvent extends AppCompatActivity implements EventView {
+public class EditEvent extends AppCompatActivity implements EventView {
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter,df;
     SharedPrefManager sharedPrefManager;
@@ -43,12 +39,12 @@ public class AddEvent extends AppCompatActivity implements EventView {
     ImageButton back, primary, success, info, warning, danger;
     EventPresenter eventPresenter;
     Date nstart, nend;
-    String start,end, color = "primary", month, year;
+    String start,end, color = "primary", month, year, id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event);
+        setContentView(R.layout.activity_edit_event);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -64,6 +60,26 @@ public class AddEvent extends AppCompatActivity implements EventView {
         info = findViewById(R.id.info);
         warning = findViewById(R.id.warning);
         danger = findViewById(R.id.danger);
+        save = findViewById(R.id.save);
+
+        id = getIntent().getStringExtra("id");
+        String stitle = getIntent().getStringExtra("title");
+        String sdesc = getIntent().getStringExtra("desc");
+        if (stitle.equals("-")){
+            title.setText("");
+        }else{
+            title.setText(stitle);
+        }
+
+        if (sdesc.equals("-")){
+            desc.setText("");
+        }else{
+            desc.setText(sdesc);
+        }
+
+        start = getIntent().getStringExtra("start");
+        end = getIntent().getStringExtra("end");
+        colorPicker(getIntent().getStringExtra("color"));
 
         sharedPrefManager = new SharedPrefManager(this);
         eventPresenter = new EventPresenter(this);
@@ -72,27 +88,11 @@ public class AddEvent extends AppCompatActivity implements EventView {
         btn_end = findViewById(R.id.end);
         save = findViewById(R.id.save);
 
-        save.setOnClickListener(new View.OnClickListener() {
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ntitle = title.getText().toString();
-                String ndesc = desc.getText().toString();
-                if (ntitle.isEmpty()){
-                    ntitle = "-";
-                }
-
-                if (ndesc.isEmpty()){
-                    ndesc = "-";
-                }
-
-                if (nstart.after(nend)){
-                    Toast.makeText(AddEvent.this, "Waktu mulai melebihi waktu selesai", Toast.LENGTH_SHORT).show();
-                }else {
-                    Log.e("Y",ntitle + "-" +ndesc + "-" + start + "-" + end + "-" + color);
-                    eventPresenter.store(sharedPrefManager.getSpToken(),ntitle,ndesc,start,end,color);
-                }
-
-
+                onBackPressed();
             }
         });
 
@@ -105,31 +105,19 @@ public class AddEvent extends AppCompatActivity implements EventView {
 
         df = new SimpleDateFormat("yyyy-MM-dd");
         dateFormatter = new SimpleDateFormat("EEEE, d MMMM yyyy");
-        Date d = new Date();
-        final String nowDate = df.format(d);
-        start = nowDate;
-        end = nowDate;
         try {
-            nstart = df.parse(nowDate);
-            nend = df.parse(nowDate);
+            nstart = df.parse(getIntent().getStringExtra("start"));
+            nend = df.parse(getIntent().getStringExtra("end"));
 
             String[] date = df.format(nstart).split("-");
             year = date[0];
             month = date[1];
 
-            btn_start.setHint(dateFormatter.format(d));
-            btn_end.setHint(dateFormatter.format(d));
+            btn_start.setHint(dateFormatter.format(nstart));
+            btn_end.setHint(dateFormatter.format(nend));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,6 +169,30 @@ public class AddEvent extends AppCompatActivity implements EventView {
             @Override
             public void onClick(View v) {
                 colorPicker("danger");
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String ntitle = title.getText().toString();
+                String ndesc = desc.getText().toString();
+                if (ntitle.isEmpty()){
+                    ntitle = "-";
+                }
+
+                if (ndesc.isEmpty()){
+                    ndesc = "-";
+                }
+
+                if (nstart.after(nend)){
+                    Toast.makeText(EditEvent.this, "Waktu mulai melebihi waktu selesai", Toast.LENGTH_SHORT).show();
+                }else {
+                    Log.e("Y",ntitle + "-" +ndesc + "-" + start + "-" + end + "-" + color);
+                    eventPresenter.update(sharedPrefManager.getSpToken(),id,ntitle,ndesc,start,end,color);
+                }
+
+
             }
         });
     }
@@ -276,17 +288,22 @@ public class AddEvent extends AppCompatActivity implements EventView {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
     public void onSuccessLoadEvent(List<Event> events) {
 
     }
 
     @Override
     public void onSuccessStoreEvent(String code, String message) {
+
+    }
+
+    @Override
+    public void onSuccessDeleteEvent(String code, String message) {
+
+    }
+
+    @Override
+    public void onSuccessUpdateEvent(String code, String message) {
         if (code.equals("200"))
         {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -299,16 +316,6 @@ public class AddEvent extends AppCompatActivity implements EventView {
         }else{
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public void onSuccessDeleteEvent(String code, String message) {
-
-    }
-
-    @Override
-    public void onSuccessUpdateEvent(String code, String message) {
-
     }
 
     @Override
@@ -329,11 +336,5 @@ public class AddEvent extends AppCompatActivity implements EventView {
     @Override
     public void getError(String error) {
 
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

@@ -42,7 +42,6 @@ public class Login extends BaseActivity implements AuthView {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
-        skip = findViewById(R.id.skip);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

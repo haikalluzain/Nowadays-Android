@@ -84,4 +84,26 @@ public class EventPresenter<EV extends EventView> extends BasePresenter {
             }
         });
     }
+
+    public void update(String token,String id,String title, String desc, String start, String end, String color){
+        String Ntoken = "Bearer " + token;
+        eventview.onShow();
+        apiClass.updateEvent(Ntoken,id,title,desc,start,end,color).enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                eventview.getHttp(Integer.toString(response.code()));
+                if (response.isSuccessful()){
+                    eventview.onSuccessUpdateEvent(response.body().getCode(), response.body().getMessage());
+                    eventview.onHide();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                eventview.getError(t.getMessage());
+                eventview.onHide();
+                Log.e("Error",t.getMessage());
+            }
+        });
+    }
 }

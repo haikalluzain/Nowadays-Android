@@ -59,6 +59,7 @@ public class Main extends AppCompatActivity {
                 new TodayFragment()).commit();
         menuItem = bottomNav.getMenu().getItem(1);
         menuItem.setChecked(true);
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

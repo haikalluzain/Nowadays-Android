@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.example.haikalfluzain.nowadays.R;
 import com.example.haikalfluzain.nowadays.activity.AddEvent;
+import com.example.haikalfluzain.nowadays.activity.EditEvent;
 import com.example.haikalfluzain.nowadays.activity.ProfileDialog;
 import com.example.haikalfluzain.nowadays.adapter.EventAdapter;
 import com.example.haikalfluzain.nowadays.base.BaseFragment;
@@ -46,6 +47,7 @@ import com.example.haikalfluzain.nowadays.presenter.EventPresenter;
 import com.example.haikalfluzain.nowadays.view.EventView;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,12 +70,13 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
     SwipeRefreshLayout refresh;
     TextView count, date, changeMonthText, selectAllText, title,desc,date_detail;
     ImageView changeMonthIcon, user, delete;
-    ImageButton close_detail,hide, delete_detail;
+    ImageButton close_detail,hide, delete_detail, edit;
     FloatingActionButton add;
     BottomSheetBehavior behavior;
     int dataCount, month, year, selected = 0;
     boolean showAll = false, isDetail = false;
-    String nowdate, detail_id;
+    String nowdate, detail_id, stitle,sdesc,sstart,send, scolor;
+    SimpleDateFormat df;
     ArrayList<String> selectArr = new ArrayList<>();
     List<Event> events = new ArrayList<>();
 
@@ -121,6 +124,7 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
         color = view.findViewById(R.id.color);
         date_detail = view.findViewById(R.id.date_detail);
         delete_detail = view.findViewById(R.id.delete_detail);
+        edit = view.findViewById(R.id.edit);
 
         bottom_sheet = view.findViewById(R.id.bottom_sheet);
         behavior = BottomSheetBehavior.from(bottom_sheet);
@@ -323,6 +327,20 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
             }
         });
 
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditEvent.class);
+                intent.putExtra("id", detail_id);
+                intent.putExtra("title", stitle);
+                intent.putExtra("desc", sdesc);
+                intent.putExtra("start", sstart);
+                intent.putExtra("end", send);
+                intent.putExtra("color", scolor);
+                startActivityForResult(intent,2);
+            }
+        });
+
         return view;
     }
 
@@ -406,6 +424,11 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
         }else{
             Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onSuccessUpdateEvent(String code, String message) {
+
     }
 
     @Override
@@ -518,6 +541,7 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
                 String check = data.getStringExtra("refresh");
                 String newMonth = data.getStringExtra("month");
                 String newYear = data.getStringExtra("year");
+                behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 if (check.equals("true")){
                     nowdate = changeFormat(newYear + "-" + newMonth + "-" + "01");
 
@@ -536,12 +560,33 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
 
     public void showDetail(boolean show,String id, String Gtitle,String Gdesc, String Gstart, String Gend, String Gcolor){
         if (show){
+            df = new SimpleDateFormat("EEEE, d MMM yyyy");
+            try {
+                String nstart = df.parse(Gstart);
+                String nend = df.parse(Gend);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             add.hide();
-            title.setText(Gtitle);
+            if (Gtitle.equals("-")){
+                title.setText("( Tanpa Judul )");
+            }else{
+                title.setText(Gtitle);
+            }
             date_detail.setText(Gstart);
             detail_id = id;
-            desc.setText(Gdesc);
+            stitle = Gtitle;
+            sdesc = Gdesc;
+            sstart = Gstart;
+            send = Gend;
+            scolor = Gcolor;
+            if (Gdesc.equals("-")){
+                desc.setText("( Tidak ada deskripsi )");
+            }else{
+                desc.setText(Gdesc);
+            }
             switch (Gcolor){
                 case "primary":
                     color.getBackground().setColorFilter(getContext().getResources().getColor(R.color.blue_600), PorterDuff.Mode.SRC_ATOP);

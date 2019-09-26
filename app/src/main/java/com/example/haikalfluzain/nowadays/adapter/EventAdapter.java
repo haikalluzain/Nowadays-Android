@@ -93,7 +93,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
         String newStart = formatStart.format(Date.parse(start));
         String newEnd = formatEnd.format(Date.parse(end));
 
-        holder.title.setText(events.get(i).getTitle());
+        if (events.get(i).getTitle().equals("-")){
+            holder.title.setText("( Tanpa Judul )");
+        }else{
+            holder.title.setText(events.get(i).getTitle());
+        }
+
         holder.date.setText(newStart + " - " + newEnd);
 
         switch (events.get(i).getColor()){

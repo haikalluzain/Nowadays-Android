@@ -68,6 +68,16 @@ public interface ApiClass {
                                    @Field("end") String end,
                                    @Field("color") String color);
 
+    @FormUrlEncoded
+    @POST("event/update")
+    Call<BaseResponse> updateEvent(@Header("Authorization") String token,
+                                  @Field("id") String id,
+                                  @Field("title") String title,
+                                  @Field("description") String desc,
+                                  @Field("start") String start,
+                                  @Field("end") String end,
+                                  @Field("color") String color);
+
     @DELETE("event/delete/{id}")
     Call<BaseResponse> deleteEvent(@Header("Authorization") String token,
                                    @Path("id") String id);

@@ -39,6 +39,7 @@
                         android:id="@+id/close"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
                         android:src="@drawable/ic_close_black_24dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:tint="@color/grey_800"/>
@@ -65,7 +66,8 @@
                         android:id="@+id/edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="30dp"
+                        android:padding="5dp"
+                        android:layout_marginRight="20dp"
                         android:tint="@color/grey_800"
                         android:src="@drawable/ic_edit_3"
                         android:background="?attr/selectableItemBackgroundBorderless"/>
@@ -74,6 +76,7 @@
                         android:id="@+id/delete_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
                         android:src="@drawable/ic_trash_2"
                         android:tint="@color/grey_800"
                         android:background="?attr/selectableItemBackgroundBorderless"/>
