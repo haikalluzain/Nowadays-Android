@@ -76,7 +76,7 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
     int dataCount, month, year, selected = 0;
     boolean showAll = false, isDetail = false;
     String nowdate, detail_id, stitle,sdesc,sstart,send, scolor;
-    SimpleDateFormat df;
+    SimpleDateFormat df, dt;
     ArrayList<String> selectArr = new ArrayList<>();
     List<Event> events = new ArrayList<>();
 
@@ -560,10 +560,12 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
 
     public void showDetail(boolean show,String id, String Gtitle,String Gdesc, String Gstart, String Gend, String Gcolor){
         if (show){
-            df = new SimpleDateFormat("EEEE, d MMM yyyy");
+            df = new SimpleDateFormat("yyyy-MM-dd");
+            dt = new SimpleDateFormat("EEEE, d MMM yyyy");
+            String start = "", end = "";
             try {
-                String nstart = df.parse(Gstart);
-                String nend = df.parse(Gend);
+                start = String.valueOf(dt.format(df.parse(Gstart)));
+                end = String.valueOf(dt.format(df.parse(Gend)));
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -575,7 +577,7 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
             }else{
                 title.setText(Gtitle);
             }
-            date_detail.setText(Gstart);
+            date_detail.setText(start + " - " + end);
             detail_id = id;
             stitle = Gtitle;
             sdesc = Gdesc;
