@@ -30,7 +30,7 @@ public class ProfileDialog extends BaseActivity implements AuthView {
         setContentView(R.layout.activity_profile_dialog);
 
         sharedPrefManager = new SharedPrefManager(this);
-        authPresenter = new AuthPresenter(this);
+        authPresenter = new AuthPresenter(this, this);
 
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         logout = findViewById(R.id.logout);

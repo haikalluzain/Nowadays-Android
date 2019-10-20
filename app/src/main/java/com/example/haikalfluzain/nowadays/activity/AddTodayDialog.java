@@ -45,7 +45,7 @@ public class AddTodayDialog extends BaseActivity implements TodayView{
         setContentView(R.layout.activity_add_today_dialog);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        todayPresenter = new TodayPresenter(this);
+        todayPresenter = new TodayPresenter(this,this);
         sharedPrefManager = new SharedPrefManager(this);
 
 

@@ -148,7 +148,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
             holder.active.setVisibility(View.GONE);
         }
 
-
     }
 
     @Override

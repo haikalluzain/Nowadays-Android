@@ -1,9 +1,13 @@
 package com.example.haikalfluzain.nowadays.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.haikalfluzain.nowadays.base.BasePresenter;
 import com.example.haikalfluzain.nowadays.base.BaseResponse;
+import com.example.haikalfluzain.nowadays.helper.SharedPrefManager;
+import com.example.haikalfluzain.nowadays.network.ApiClass;
+import com.example.haikalfluzain.nowadays.network.ApiClient;
 import com.example.haikalfluzain.nowadays.response.EventResponse;
 import com.example.haikalfluzain.nowadays.view.EventView;
 
@@ -11,14 +15,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EventPresenter<EV extends EventView> extends BasePresenter {
-    EV eventview;
+public class EventPresenter<EV extends EventView> extends BasePresenter{
+    private EV eventview;
+    Context context;
+    SharedPrefManager sharedPrefManager;
+    private ApiClass apiClass;
 
-    public EventPresenter(EV eventview) {
+    public EventPresenter(EV eventview,Context context) {
+        this.context = context;
         this.eventview = eventview;
+
+        sharedPrefManager = new SharedPrefManager(context);
+
+    }
+
+    private void Api(){
+        apiClass = new ApiClient(context).getServer(sharedPrefManager.getIpAddress()).create(ApiClass.class);
     }
 
     public void getEvent(String token, int month, int year){
+        Api();
         String Ntoken = "Bearer " + token;
         eventview.onShow();
         apiClass.getEvent(Ntoken, month, year).enqueue(new Callback<EventResponse>() {
@@ -42,6 +58,7 @@ public class EventPresenter<EV extends EventView> extends BasePresenter {
     }
 
     public void store(String token,String title, String desc, String start, String end, String color){
+        Api();
         String Ntoken = "Bearer " + token;
         eventview.onShow();
         apiClass.storeEvent(Ntoken,title,desc,start,end,color).enqueue(new Callback<BaseResponse>() {
@@ -64,6 +81,7 @@ public class EventPresenter<EV extends EventView> extends BasePresenter {
     }
 
     public void delete(String id,String token){
+        Api();
         String Ntoken = "Bearer " + token;
         eventview.onShow();
         apiClass.deleteEvent(Ntoken,id).enqueue(new Callback<BaseResponse>() {
@@ -86,6 +104,7 @@ public class EventPresenter<EV extends EventView> extends BasePresenter {
     }
 
     public void update(String token,String id,String title, String desc, String start, String end, String color){
+        Api();
         String Ntoken = "Bearer " + token;
         eventview.onShow();
         apiClass.updateEvent(Ntoken,id,title,desc,start,end,color).enqueue(new Callback<BaseResponse>() {

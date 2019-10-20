@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.TextInputEditText;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.haikalfluzain.nowadays.R;
 import com.example.haikalfluzain.nowadays.base.BaseActivity;
+import com.example.haikalfluzain.nowadays.fragment.NoConnectionFragment;
 import com.example.haikalfluzain.nowadays.helper.SharedPrefManager;
 import com.example.haikalfluzain.nowadays.presenter.AuthPresenter;
 import com.example.haikalfluzain.nowadays.view.AuthView;
@@ -23,6 +25,7 @@ public class Login extends BaseActivity implements AuthView {
     Button login, skip;
     SharedPrefManager sharedPrefManager;
     AuthPresenter authPresenter;
+    NoConnectionFragment noConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,8 @@ public class Login extends BaseActivity implements AuthView {
         }
 
         sharedPrefManager = new SharedPrefManager(this);
-        authPresenter = new AuthPresenter(this);
+        authPresenter = new AuthPresenter(this, this);
+        noConnection = new NoConnectionFragment();
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -120,6 +124,7 @@ public class Login extends BaseActivity implements AuthView {
 
     @Override
     public void getError(String error) {
+        noConnection.show(getSupportFragmentManager(), "");
         super.showError(error);
     }
 }

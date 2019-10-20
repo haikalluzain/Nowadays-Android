@@ -10,10 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.ChangePort"
+            android:theme="@style/ProfileDialog"></activity>
         <activity
             android:name=".activity.EditEvent"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.AddEvent"
             android:theme="@style/AppTheme.NoActionBar" />

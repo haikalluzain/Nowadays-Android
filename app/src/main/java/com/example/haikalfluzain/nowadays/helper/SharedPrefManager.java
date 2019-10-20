@@ -11,6 +11,7 @@ public class SharedPrefManager {
 
     public static final String SP_LOGIN = "true";
     public static final String SP_SKIP = "true";
+    public static final String IP_ADDRESS = "localhost:8000";
 
     SharedPreferences sp;
     SharedPreferences.Editor spEditor;
@@ -49,6 +50,10 @@ public class SharedPrefManager {
 
     public Boolean getSpSkip(){
         return sp.getBoolean(SP_SKIP, false);
+    }
+
+    public String getIpAddress() {
+        return sp.getString(IP_ADDRESS,"http://192.168.43.65/Laravel/nowadays/public/api/");
     }
 
 }

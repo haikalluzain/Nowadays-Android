@@ -82,7 +82,7 @@ public class EditEvent extends AppCompatActivity implements EventView {
         colorPicker(getIntent().getStringExtra("color"));
 
         sharedPrefManager = new SharedPrefManager(this);
-        eventPresenter = new EventPresenter(this);
+        eventPresenter = new EventPresenter(this, this);
 
         btn_start = findViewById(R.id.start);
         btn_end = findViewById(R.id.end);

@@ -108,6 +108,7 @@
                     android:layout_marginHorizontal="5dp"
                     android:padding="15dp"
                     android:text="Login"
+                    android:textStyle="bold"
                     android:fontFamily="@font/font_product_sans"
                     android:textColor="@color/white"
                     android:background="@drawable/button_custom_solid"

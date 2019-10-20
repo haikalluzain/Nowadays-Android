@@ -1,7 +1,8 @@
 package com.example.haikalfluzain.nowadays.config;
 
-public class ClientConfig {
+import com.example.haikalfluzain.nowadays.helper.SharedPrefManager;
 
-    public static String baseUrl = "http://10.1.20.81/nowadays/public/api/";
-//    public static String baseUrl = "http://192.168.43.101/nowadays/public/api/";
+public class ClientConfig {
+    String apaweh = "http://192.168.43.65/Laravel/nowadays/public/api/";
+
 }

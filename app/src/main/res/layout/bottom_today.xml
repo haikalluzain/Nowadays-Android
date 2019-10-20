@@ -142,7 +142,6 @@
                 android:backgroundTint="@color/blue_200"
                 android:padding="15dp"
                 android:text="Simpan Perubahan"
-                android:textAllCaps="false"
                 android:textStyle="bold"
                 style="?android:borderlessButtonStyle"
                 android:textColor="@color/blue_800"

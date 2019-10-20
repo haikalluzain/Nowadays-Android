@@ -66,7 +66,7 @@ public class AddEvent extends AppCompatActivity implements EventView {
         danger = findViewById(R.id.danger);
 
         sharedPrefManager = new SharedPrefManager(this);
-        eventPresenter = new EventPresenter(this);
+        eventPresenter = new EventPresenter(this,this);
 
         btn_start = findViewById(R.id.start);
         btn_end = findViewById(R.id.end);

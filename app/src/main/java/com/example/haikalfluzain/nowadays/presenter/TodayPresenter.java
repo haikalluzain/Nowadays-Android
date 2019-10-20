@@ -1,9 +1,13 @@
 package com.example.haikalfluzain.nowadays.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.haikalfluzain.nowadays.base.BasePresenter;
 import com.example.haikalfluzain.nowadays.base.BaseResponse;
+import com.example.haikalfluzain.nowadays.helper.SharedPrefManager;
+import com.example.haikalfluzain.nowadays.network.ApiClass;
+import com.example.haikalfluzain.nowadays.network.ApiClient;
 import com.example.haikalfluzain.nowadays.response.TodayResponse;
 import com.example.haikalfluzain.nowadays.view.TodayView;
 
@@ -15,14 +19,25 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TodayPresenter<TV extends TodayView> extends BasePresenter {
-    TV todayview;
+    private TV todayview;
+    private Context context;
+    private SharedPrefManager sharedPrefManager;
+    private ApiClass apiClass;
 
-    public TodayPresenter(TV todayview){
+    public TodayPresenter(TV todayview, Context context){
         this.todayview = todayview;
+        this.context = context;
+
+        sharedPrefManager = new SharedPrefManager(context);
+    }
+
+    private void Api(){
+        apiClass = new ApiClient(context).getServer(sharedPrefManager.getIpAddress()).create(ApiClass.class);
     }
 
     public void getToday(String token)
     {
+        Api();
         String Ntoken = "Bearer " + token;
         todayview.onShow();
         apiClass.getToday(Ntoken).enqueue(new Callback<TodayResponse>() {
@@ -46,6 +61,7 @@ public class TodayPresenter<TV extends TodayView> extends BasePresenter {
 
     public void store(String activity, String start, String end, String token)
     {
+        Api();
         todayview.onShow();
         String Ntoken = "Bearer " + token;
 
@@ -71,6 +87,7 @@ public class TodayPresenter<TV extends TodayView> extends BasePresenter {
 
     public void update(String activity, String id, String start, String end, String token)
     {
+        Api();
         todayview.onShow();
         String Ntoken = "Bearer " + token;
 
@@ -96,6 +113,7 @@ public class TodayPresenter<TV extends TodayView> extends BasePresenter {
 
     public void delete(String selectedId, String token)
     {
+        Api();
         todayview.onShow();
         String Ntoken = "Bearer " + token;
 

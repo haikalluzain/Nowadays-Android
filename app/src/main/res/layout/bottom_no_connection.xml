@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:fitsSystemWindows="false"
+    android:isScrollContainer="true"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:focusable="true"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="10dp"
+        android:focusableInTouchMode="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="10dp">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:src="@drawable/lose_connection"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tidak Terhubung"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:textColor="@color/grey_800"
+                android:fontFamily="@font/font_product_sans"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="Silahkan cek koneksi internet anda atau cek port yang anda gunakan"
+                android:textSize="18dp"
+                android:textColor="@color/grey_800"
+                android:fontFamily="@font/font_product_sans"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/changePort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_outline"
+                android:backgroundTint="@color/blue_600"
+                android:padding="15dp"
+                android:text="Ubah Port"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                style="?android:borderlessButtonStyle"
+                android:textColor="@color/blue_600"
+                android:fontFamily="@font/font_product_sans"/>
+
+            <Button
+                android:id="@+id/retry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_custom_solid"
+                android:backgroundTint="@color/blue_600"
+                android:padding="15dp"
+                android:text="Coba Lagi"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                style="?android:borderlessButtonStyle"
+                android:textColor="@color/white"
+                android:fontFamily="@font/font_product_sans"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

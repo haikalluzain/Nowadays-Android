@@ -1,7 +1,13 @@
 package com.example.haikalfluzain.nowadays.presenter;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.example.haikalfluzain.nowadays.base.BasePresenter;
 import com.example.haikalfluzain.nowadays.base.BaseResponse;
+import com.example.haikalfluzain.nowadays.helper.SharedPrefManager;
+import com.example.haikalfluzain.nowadays.network.ApiClass;
+import com.example.haikalfluzain.nowadays.network.ApiClient;
 import com.example.haikalfluzain.nowadays.response.LoginResponse;
 import com.example.haikalfluzain.nowadays.response.UserResponse;
 import com.example.haikalfluzain.nowadays.view.AuthView;
@@ -12,20 +18,31 @@ import retrofit2.Response;
 
 public class AuthPresenter<authView extends AuthView> extends BasePresenter {
 
-    authView authView;
+    private authView authView;
+    private Context context;
+    private SharedPrefManager sharedPrefManager;
+    private ApiClass apiClass, api;
 
-    public AuthPresenter(authView authView)
+    public AuthPresenter(authView authView, Context context)
     {
+        this.context = context;
         this.authView = authView;
+
+        sharedPrefManager = new SharedPrefManager(context);
+    }
+
+    private void Api(){
+        apiClass = new ApiClient(context).getServer(sharedPrefManager.getIpAddress()).create(ApiClass.class);
     }
 
     public void login(String email, String password)
     {
         authView.onShow();
-
+        Api();
         apiClass.login(email,password).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+//                Log.i("Apa Coba",response.message());
                 if (response.isSuccessful())
                 {
                     String code = response.body().getCode();
@@ -40,6 +57,7 @@ public class AuthPresenter<authView extends AuthView> extends BasePresenter {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 authView.getError(t.getMessage());
+//                Log.i("Error",t.getMessage());
                 authView.onHide();
             }
         });
@@ -48,7 +66,7 @@ public class AuthPresenter<authView extends AuthView> extends BasePresenter {
     public void load(String token)
     {
         String Ntoken =  "Bearer " + token;
-
+        Api();
         apiClass.loadAuth(Ntoken).enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
@@ -68,7 +86,7 @@ public class AuthPresenter<authView extends AuthView> extends BasePresenter {
     public  void logout(String token)
     {
         authView.onShow();
-
+        Api();
         String Ntoken =  "Bearer " + token;
 
         apiClass.logout(Ntoken).enqueue(new Callback<BaseResponse>() {

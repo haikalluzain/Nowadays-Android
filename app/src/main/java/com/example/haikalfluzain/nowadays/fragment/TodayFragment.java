@@ -47,7 +47,7 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 @SuppressWarnings("deprecation")
-public class TodayFragment extends BaseFragment implements TodayView, TodayAdapter.Listener {
+public class TodayFragment extends BaseFragment implements TodayView, TodayAdapter.Listener{
     RecyclerView recyclerView;
     TodayAdapter todayAdapter;
     TodayPresenter todayPresenter;
@@ -62,8 +62,8 @@ public class TodayFragment extends BaseFragment implements TodayView, TodayAdapt
     int dataCount = 0;
     Integer selected = 0;
     ArrayList<String> selectArr = new ArrayList<>();
-
     List<Today> todays = new ArrayList<>();
+    NoConnectionFragment noConnectionFragment;
 
     @Nullable
     @Override
@@ -80,7 +80,7 @@ public class TodayFragment extends BaseFragment implements TodayView, TodayAdapt
         recyclerView = view.findViewById(R.id.recyclerTest);
         refresh = view.findViewById(R.id.refresh);
         sharedPrefManager = new SharedPrefManager(getContext());
-        todayPresenter = new TodayPresenter(this);
+        todayPresenter = new TodayPresenter(this, getContext());
         todayPresenter.getToday(sharedPrefManager.getSpToken());
         todayAdapter = new TodayAdapter(getActivity(), this);
         recyclerView.setAdapter(todayAdapter);
@@ -116,6 +116,7 @@ public class TodayFragment extends BaseFragment implements TodayView, TodayAdapt
         bottomSheetDialog = new BottomSheetDialog(getActivity());
         bottomSheetDialog.setContentView(R.layout.bottom_today);
 
+        noConnectionFragment = new NoConnectionFragment();
 
         user.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,6 +236,7 @@ public class TodayFragment extends BaseFragment implements TodayView, TodayAdapt
 
     @Override
     public void getError(String error) {
+        noConnectionFragment.show(getFragmentManager(), "");
         super.showError(error);
     }
 

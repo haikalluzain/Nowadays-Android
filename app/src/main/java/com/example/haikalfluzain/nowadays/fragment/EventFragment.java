@@ -79,6 +79,7 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
     SimpleDateFormat df, dt;
     ArrayList<String> selectArr = new ArrayList<>();
     List<Event> events = new ArrayList<>();
+    NoConnectionFragment noConnectionFragment;
 
     @Nullable
     @Override
@@ -100,7 +101,7 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
         scrollView = view.findViewById(R.id.nestedScrollView);
         refresh = view.findViewById(R.id.refresh);
         sharedPrefManager = new SharedPrefManager(getContext());
-        eventPresenter = new EventPresenter(this);
+        eventPresenter = new EventPresenter(this, getContext());
         eventPresenter.getEvent(sharedPrefManager.getSpToken(),month,year);
         eventAdapter = new EventAdapter(getActivity(),this);
         recyclerView.setAdapter(eventAdapter);
@@ -130,6 +131,8 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
         behavior = BottomSheetBehavior.from(bottom_sheet);
         behavior.setPeekHeight(0);
         behavior.setFitToContents(true);
+
+        noConnectionFragment = new NoConnectionFragment();
 
         behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -448,6 +451,7 @@ public class EventFragment extends BaseFragment implements EventView, EventAdapt
 
     @Override
     public void getError(String error) {
+        noConnectionFragment.show(getFragmentManager(),"");
         super.showError(error);
     }
 

@@ -69,7 +69,8 @@
                 android:background="@drawable/button_custom_solid"
                 android:backgroundTint="@color/red_200"
                 android:text="Logout"
-                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textAllCaps="true"
                 android:fontFamily="@font/product_sans_regular"
                 android:textColor="@color/red_900"/>
         </LinearLayout>
